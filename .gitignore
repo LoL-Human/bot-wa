@@ -1,0 +1,10 @@
+node_modules
+*-session
+baileys_store.json
+.vscode
+.prettierrc
+*-lock.json
+config.json
+nodemon.json
+libs/databases/json/*.json
+test/
