@@ -9,8 +9,6 @@ const store = require('@store')
 const chalk = require('chalk')
 const Pino = require('pino')
 
-console.log(chalk.whiteBright('╭─── [ LOG ]'))
-
 existsSync('./store/baileys_store.json') && store.readFromFile('./store/baileys_store.json')
 setInterval(() => {
     store.writeToFile('./store/baileys_store.json')

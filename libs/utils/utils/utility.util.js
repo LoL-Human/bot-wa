@@ -9,7 +9,7 @@ const config = require('@config')
 
 class Utility {
     constructor() {
-        Promise.all([this.deleteSession(), this.registerCommand(), this.initCronJob(), this.initDatabase()])
+        Promise.all([this.deleteSession(), this.registerCommand(), this.initCronJob()])
     }
 
     getAllFiles(directory) {
@@ -30,16 +30,6 @@ class Utility {
         if (sessionFiles.length !== 0) {
             sessionFiles.forEach((v) => rimraf.sync(v))
             logger.stats('Clear session jadibot')
-        }
-    }
-
-    initDatabase() {
-        const userPath = path.resolve(config.rootPath, 'libs', 'databases', 'json', 'users.json')
-        if (!existsSync(userPath)) {
-            writeFileSync(userPath, JSON.stringify({}))
-            logger.stats('Create database users.json')
-        } else {
-            logger.stats('Init database users.json')
         }
     }
 

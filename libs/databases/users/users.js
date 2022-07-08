@@ -1,7 +1,8 @@
-const { readFileSync, writeFileSync } = require('fs')
+const { readFileSync, writeFileSync, existsSync } = require('fs')
 const moment = require('moment-timezone')
 const config = require('@config')
 const path = require('path')
+const { logger } = require('@libs/utils/logger/logger.util')
 
 class User {
     /**
@@ -10,7 +11,14 @@ class User {
     users = {}
 
     constructor() {
-        this.users = JSON.parse(readFileSync(path.resolve(__dirname, '..', 'json', 'users.json')))
+        const userPath = path.resolve(__dirname, '..', 'json', 'users.json')
+        if (!existsSync(userPath)) {
+            writeFileSync(userPath, JSON.stringify({}))
+            logger.stats('Create database users.json')
+        } else {
+            logger.stats('Init database users.json')
+        }
+        this.users = JSON.parse(readFileSync(userPath))
     }
 
     findOne(whatsapp_number) {
