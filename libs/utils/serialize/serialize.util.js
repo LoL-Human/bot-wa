@@ -62,15 +62,47 @@ const serialize = async (msg, client) => {
             m.typeCheck.isQuotedLocation = typeQuoted == 'locationMessage'
         }
     }
+
     m.groupMetadata = m.isGroup ? await client.groupMetadata(m.from) : null
-    m.reply = (text, quoted) => !m.isSelf && client.sendMessage(m.from, { text: text.toString().trim() }, { quoted: quoted || msg })
-    m.replyWithMentions = (text, mentions, quoted) => !m.isSelf && client.sendMessage(m.from, { text: text.toString().trim(), mentions }, { quoted: quoted || msg })
-    m.replyImage = (image, caption) => !m.isSelf && client.sendMessage(m.from, { image, caption }, { quoted: msg })
-    m.replyVideo = (video, caption) => !m.isSelf && client.sendMessage(m.from, { video, mimetype: 'video/mp4', caption }, { quoted: msg })
-    m.replyAudio = (audio, ptt) => !m.isSelf && client.sendMessage(m.from, { audio, mimetype: 'audio/mp4', ptt }, { quoted: msg })
-    m.replySticker = (sticker) => !m.isSelf && client.sendMessage(m.from, { sticker }, { quoted: msg })
-    m.replyLocation = (location) => !m.isSelf && client.sendMessage(m.from, { location }, { quoted: msg })
-    m.react = (text) => !m.isSelf && client.sendMessage(m.from, { react: { text, key: msg.key } })
+
+    m.reply = (text, quoted) => {
+        return !m.isSelf && client.sendMessage(m.from, { text: text.toString().trim() }, { quoted: quoted || msg })
+    }
+    m.replyWithMentions = (text, mentions, quoted) => {
+        return !m.isSelf && client.sendMessage(m.from, { text: text.toString().trim(), mentions }, { quoted: quoted || msg })
+    }
+    m.replyImage = (image, caption) => {
+        return !m.isSelf && client.sendMessage(m.from, { image, caption }, { quoted: msg })
+    }
+    m.replyVideo = (video, caption) => {
+        return !m.isSelf && client.sendMessage(m.from, { video, mimetype: 'video/mp4', caption }, { quoted: msg })
+    }
+    m.replyAudio = (audio, ptt) => {
+        return !m.isSelf && client.sendMessage(m.from, { audio, mimetype: 'audio/mp4', ptt }, { quoted: msg })
+    }
+    m.replyDocument = (document, mimetype, fileName) => {
+        return !m.isSelf && client.sendMessage(m.from, { document, mimetype, fileName }, { quoted: msg })
+    }
+    m.replySticker = (sticker) => {
+        return !m.isSelf && client.sendMessage(m.from, { sticker }, { quoted: msg })
+    }
+    m.replyLocation = (location) => {
+        return !m.isSelf && client.sendMessage(m.from, { location }, { quoted: msg })
+    }
+    m.replyTemplateButton = (text, templateButtons, title, footer) => {
+        return !m.isSelf && client.sendMessage(m.from, { text, footer, templateButtons, title }, { quoted: msg })
+    }
+    m.replyButton = (text, buttons, title, footer) => {
+        return !m.isSelf && client.sendMessage(m.from, { text, footer, buttons, title }, { quoted: msg })
+    }
+    m.replyList = (text, buttonText, sections, title, footer) => {
+        return !m.isSelf && client.sendMessage(m.from, { text, buttonText, sections, title, footer }, { quoted: msg })
+    }
+
+    m.react = (text) => {
+        return !m.isSelf && client.sendMessage(m.from, { react: { text, key: msg.key } })
+    }
+
     m.download = (type = 'stream') => downloadMedia(msg.message, type)
     m.createMessageCollector = (options = { filter: null }) => new collector.MessageCollector(client, options, m)
     return m
