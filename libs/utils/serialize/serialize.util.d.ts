@@ -1,5 +1,43 @@
 import { GroupMetadata, MessageType, proto, WAMediaUpload, WAMessage } from '@adiwajshing/baileys'
-import { MessageCollectorOptions, MessageQuote } from '@libs/builders/command/command.builder'
+
+interface MessageQuote {
+    key?: { id: string; fromMe: boolean; remoteJid: string }
+    message?: proto.IMessage
+    download?<T extends keyof DownloadType>(type?: T): Promise<DownloadType[T]>
+    delete?: () => Promise<proto.WebMessageInfo>
+}
+
+interface MessageType {
+    isImage?: boolean
+    isVideo?: boolean
+    isAudio?: boolean
+    isSticker?: boolean
+    isContact?: boolean
+    isLocation?: boolean
+    isQuoted?: boolean
+    isQuotedImage?: boolean
+    isQuotedVideo?: boolean
+    isQuotedAudio?: boolean
+    isQuotedSticker?: boolean
+    isQuotedContact?: boolean
+    isQuotedLocation?: boolean
+}
+
+interface MessageCollectorOptions {
+    filter: RegExp | string
+    time?: number
+    max?: number
+}
+
+interface MessageCollector {
+    on(event: 'collect', listener: (msg: Serialize) => Awaited<void>): this
+    on(event: 'end', listener: (reason: 'timeout' | 'limit') => Awaited<void>): this
+}
+
+declare type DownloadType = {
+    buffer: Buffer
+    stream: Stream
+}
 
 export interface Serialize {
     id?: string
@@ -30,6 +68,6 @@ export interface Serialize {
     replyTemplateButton?: (text: string, templateButtons: proto.IHydratedTemplateButton[], title?: string, footer?: string) => Promise<proto.WebMessageInfo>
 
     react?: (text: string) => Promise<proto.WebMessageInfo>
-    download?: (type: 'buffer' | 'stream') => Promise<Buffer | Stream>
+    download?<T extends keyof DownloadType>(type?: T): Promise<DownloadType[T]>
     createMessageCollector?: (options: MessageCollectorOptions) => MessageCollector
 }

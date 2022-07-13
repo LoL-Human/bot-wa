@@ -3,68 +3,6 @@ import { Serialize } from '@libs/utils/serialize/serialize.util'
 import database from '@libs/databases'
 import { Stream } from 'stream'
 
-interface MessageQuote {
-    key?: { id: string; fromMe: boolean; remoteJid: string }
-    message?: proto.IMessage
-    download?: (type?: 'buffer' | 'stream') => Promise<Buffer | Stream>
-    delete?: () => Promise<proto.WebMessageInfo>
-}
-
-interface MessageType {
-    isImage?: boolean
-    isVideo?: boolean
-    isAudio?: boolean
-    isSticker?: boolean
-    isContact?: boolean
-    isLocation?: boolean
-    isQuoted?: boolean
-    isQuotedImage?: boolean
-    isQuotedVideo?: boolean
-    isQuotedAudio?: boolean
-    isQuotedSticker?: boolean
-    isQuotedContact?: boolean
-    isQuotedLocation?: boolean
-}
-
-interface MessageCollectorOptions {
-    filter: RegExp | string
-    time?: number
-    max?: number
-}
-
-interface MessageCollector {
-    on(event: 'collect', listener: (msg: MessageSerialize) => Awaited<void>): this
-    on(event: 'end', listener: (reason: 'timeout' | 'limit') => Awaited<void>): this
-}
-
-interface Options {
-    /**
-     * @description Command alias
-     * @example aliases: ['blabla', 'blabla']
-     */
-    aliases?: string[]
-
-    /**
-     * @required
-     * @description Command description
-     * @example description: 'Youtube Downloader'
-     */
-    description: string
-
-    /**
-     * @description Example use of the command
-     * @example example: '{prefix}{command} https://www.youtube.com/watch?v=eZskFo64rs8'
-     */
-    example?: string
-
-    /**
-     * @required
-     * @description Callback to execute command function
-     * @example callback: async ({ msg }) => msg.reply('Hello World!')
-     */
-    callback: (obj: CommandObject) => Promise<any>
-}
-
 interface CommandObject {
     client: WASocket
     message: WAMessage

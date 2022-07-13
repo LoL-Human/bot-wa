@@ -98,7 +98,6 @@ const serialize = async (msg, client) => {
     m.replyList = (text, buttonText, sections, title, footer) => {
         return !m.isSelf && client.sendMessage(m.from, { text, buttonText, sections, title, footer }, { quoted: msg })
     }
-
     m.react = (text) => {
         return !m.isSelf && client.sendMessage(m.from, { react: { text, key: msg.key } })
     }
