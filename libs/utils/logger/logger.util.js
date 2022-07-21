@@ -17,10 +17,6 @@ class Logger {
         console.log(chalk.whiteBright('├'), chalk.keyword('aqua')(`[  STORE  ]`), ...args)
     }
 
-    store(...args) {
-        console.log(chalk.whiteBright('├'), chalk.keyword('aqua')(`[  STORE  ]`), ...args)
-    }
-
     error(...args) {
         console.log(chalk.whiteBright('├'), chalk.keyword('red')('[  ERROR  ]'), ...args)
     }

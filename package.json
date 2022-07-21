@@ -34,5 +34,8 @@
         "@utils": "libs/utils",
         "@store": "store/index.js",
         "@config": "config/index.js"
+    },
+    "engines": {
+        "node": ">=16.0.0"
     }
 }
