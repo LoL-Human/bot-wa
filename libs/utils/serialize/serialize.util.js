@@ -29,6 +29,9 @@ const serialize = async (msg, client) => {
     }
     m.pushName = msg.pushName
     m.body = msg.message?.conversation || msg.message[m.type]?.text || msg.message[m.type]?.caption || null
+    if (m.body[1] === ' ') {
+        m.body = m.body.replace(' ', '')
+    }
     m.responseId = msg.message?.listResponseMessage?.singleSelectReply?.selectedRowId || msg.message?.buttonsResponseMessage?.selectedButtonId || msg.message?.templateButtonReplyMessage?.selectedId || null
     m.mentions = msg.message[m.type]?.contextInfo?.mentionedJid || []
     if (msg.message[m.type]?.contextInfo?.quotedMessage) {

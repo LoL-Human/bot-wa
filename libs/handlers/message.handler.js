@@ -17,7 +17,7 @@ module.exports = async (client, { messages, type }) => {
     if (!message.message) return
 
     message.type = getContentType(message.message)
-    const body =
+    let body =
         message.message?.conversation ||
         message.message[message.type]?.text ||
         message.message[message.type]?.caption ||
