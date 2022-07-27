@@ -46,7 +46,7 @@ class MessageCollector extends EventEmitter {
             clearTimeout(this._timeout)
             this._timeout = null
             if (this.client?.ev) {
-                this.client.ev.removeListener('messages.upsert', this.messageHandler)
+                this.client.ev.removeAllListeners('messages.upsert')
             }
         })
     }
