@@ -42,13 +42,6 @@ class MessageCollector extends EventEmitter {
         this.messageHandler = this.messageHandler.bind(this)
         this.client.ev.on('messages.upsert', this.messageHandler)
 
-        this.on('end', () => {
-            clearTimeout(this._timeout)
-            this._timeout = null
-            if (this.client?.ev) {
-                this.client.ev.removeListener('messages.upsert', this.messageHandler)
-            }
-        })
     }
 
     /**
@@ -81,7 +74,10 @@ class MessageCollector extends EventEmitter {
      * @param { string } reason
      */
     stop(reason) {
+        clearTimeout(this._timeout);
+        this._timeout = null;
         this.emit('end', reason)
+        this.client.ev.off('messages.upsert', this.messageHandler);
     }
 }
 
