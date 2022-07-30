@@ -46,7 +46,7 @@ module.exports = async (client, { messages, type }) => {
          */
         const getCommand = commands.get(command) || commands.find((v) => v?.aliases && v?.aliases?.includes(command))
         if (getCommand) {
-            let cooldownBuilder = `${msg.from} | ${msg.senderNumber} | ${getCommand.aliases.join('')}`;
+            let cooldownBuilder = `${msg.from} | ${msg.senderNumber} | ${getCommand?.aliases?.join('')}`;
             database.users.insert(msg.senderNumber)
             let user = database.users.findOne(msg.senderNumber)
             const command_log = [chalk.whiteBright('├'), chalk.keyword('aqua')(`[ ${msg.isGroup ? ' GROUP ' : 'PRIVATE'} ]`), msg.body.substr(0, 50).replace(/\n/g, ''), chalk.greenBright('from'), chalk.yellow(msg.senderNumber)]
