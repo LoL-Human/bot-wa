@@ -59,7 +59,7 @@ module.exports = async (client, { messages, type }) => {
             if (isCooldown(cooldownBuilder)) return
             // Add to cooldown when command will be executed
             addCooldown(cooldownBuilder, getCommand?.cooldown);
-            if (getCommand.ownerOnly && config.ownerNumber.includes(msg.senderNumber)) {
+            if (getCommand.ownerOnly && !config.ownerNumber.includes(msg.senderNumber)) {
                 return msg.reply('Sorry, command only for owner.')
             }
             if (getCommand.premiumOnly && !user.user_premium) {
