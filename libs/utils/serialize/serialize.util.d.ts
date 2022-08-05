@@ -1,4 +1,4 @@
-import { GroupMetadata, MessageType, proto, WAMediaUpload, WAMessage } from '@adiwajshing/baileys'
+import { GroupMetadata, MessageType, proto, WAMediaUpload, WAMessage, WASocket } from '@adiwajshing/baileys'
 
 interface MessageQuote {
     key?: { id: string; fromMe: boolean; remoteJid: string }
@@ -71,3 +71,5 @@ export interface Serialize {
     download?<T extends keyof DownloadType>(type?: T): Promise<DownloadType[T]>
     createMessageCollector?: (options: MessageCollectorOptions) => MessageCollector
 }
+
+export const serialize = (msg: WAMessage, client: WASocket): Promise<Serialize> => {}
