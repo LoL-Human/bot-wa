@@ -1,5 +1,3 @@
-const moment = require('moment-timezone')
-
 /**
  * @type { Map<String, moment.Moment> }
  */
