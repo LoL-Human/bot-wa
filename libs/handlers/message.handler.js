@@ -56,7 +56,7 @@ module.exports = async (client, { messages, type }) => {
         }
         console.log(...command_log)
 
-        if (getCommand.ownerOnly && config.ownerNumber.includes(msg.senderNumber)) {
+        if (getCommand.ownerOnly && !config.ownerNumber.includes(msg.senderNumber)) {
             return msg.reply('Sorry, command only for owner.')
         }
         if (getCommand.premiumOnly && !user.user_premium) {
