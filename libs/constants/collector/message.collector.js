@@ -1,4 +1,4 @@
-const { MessageUpdateType, WAMessage, WASocket } = require('@adiwajshing/baileys')
+const { MessageUpdateType, WAMessage, WASocket, getContentType } = require('@adiwajshing/baileys')
 const { EventEmitter } = require('events')
 
 class MessageCollector extends EventEmitter {
@@ -41,7 +41,6 @@ class MessageCollector extends EventEmitter {
 
         this.messageHandler = this.messageHandler.bind(this)
         this.client.ev.on('messages.upsert', this.messageHandler)
-
     }
 
     /**
@@ -56,6 +55,8 @@ class MessageCollector extends EventEmitter {
         if (!message.message) return
 
         const msg = await require('@libs/utils/serialize/serialize.util').serialize(message, this.client)
+        if (msg.type !== 'conversation') return
+
         if (this.msg.from !== msg.from) return
         if (typeof this.options.filter === 'string') {
             this.options.filter = new RegExp(this.options.filter)
@@ -74,10 +75,10 @@ class MessageCollector extends EventEmitter {
      * @param { string } reason
      */
     stop(reason) {
-        clearTimeout(this._timeout);
-        this._timeout = null;
+        clearTimeout(this._timeout)
+        this._timeout = null
+        this.client.ev.off('messages.upsert', this.messageHandler)
         this.emit('end', reason)
-        this.client.ev.off('messages.upsert', this.messageHandler);
     }
 }
 
