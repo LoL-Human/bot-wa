@@ -55,13 +55,12 @@ class MessageCollector extends EventEmitter {
         if (!message.message) return
 
         const msg = await require('@libs/utils/serialize/serialize.util').serialize(message, this.client)
-        if (msg.type !== 'conversation') return
 
         if (this.msg.from !== msg.from) return
         if (typeof this.options.filter === 'string') {
             this.options.filter = new RegExp(this.options.filter)
         }
-        if (this.options.filter.test(msg.body.toLowerCase())) {
+        if (this.options.filter.test(msg.body?.toLowerCase())) {
             this.emit('collect', msg)
             this.countMessage++
             if (this.countMessage >= this.options.max) {
