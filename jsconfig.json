@@ -8,7 +8,8 @@
             "@constants/*": ["libs/constants/*"],
             "@utils/*": ["./libs/utils/*"],
             "@store": ["./store/index.js"],
-            "@config": ["config/index.js"]
+            "@config": ["config/index.js"],
+            "@database": ["database"]
         }
     },
     "exclude": ["node_modules"]

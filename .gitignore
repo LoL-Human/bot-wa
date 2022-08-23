@@ -5,6 +5,5 @@ baileys_store.json
 .prettierrc
 *-lock.json
 config.json
-nodemon.json
-libs/databases/json/*.json
+database/*.db
 test/

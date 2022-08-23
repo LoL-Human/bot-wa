@@ -1,6 +1,7 @@
 const { ICommand } = require('@libs/builders/command/command.builder')
-const config = require('@config')
 const axios = require('axios').default
+const { users } = require('@database')
+const config = require('@config')
 
 const _collection = new Map()
 
@@ -10,7 +11,7 @@ const _collection = new Map()
 module.exports = {
     category: 'game',
     description: 'Game tebak gambar, guest and get exp.',
-    callback: async ({ msg, database }) => {
+    callback: async ({ msg }) => {
         if (_collection.get(msg.from)) {
             return msg.reply('Please complete last game first.', _collection.get(msg.from))
         }
@@ -26,7 +27,7 @@ module.exports = {
         })
             .on('collect', (msg) => {
                 let xp = Math.floor(Math.random() * (999 - 1) + 1)
-                database.users.addExp(msg, msg.senderNumber, xp)
+                users.addExp(msg, msg.senderNumber, xp)
                 msg.reply('Right! You received {xp} XP!'.format({ xp }))
             })
             .on('end', (res) => {

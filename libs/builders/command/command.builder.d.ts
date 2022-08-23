@@ -1,7 +1,5 @@
-import { GroupMetadata, proto, WAMediaUpload, WAMessage, WASocket } from '@adiwajshing/baileys'
+import { WAMessage, WASocket } from '@adiwajshing/baileys'
 import { Serialize } from '@libs/utils/serialize/serialize.util'
-import database from '@libs/databases'
-import { Stream } from 'stream'
 
 interface CommandObject {
     client: WASocket
@@ -11,7 +9,6 @@ interface CommandObject {
     args: string[]
     fullArgs: string
     msg: Serialize
-    database: typeof database
 }
 
 export class ICommand {
@@ -64,6 +61,12 @@ export class ICommand {
      * @example premiumOnly: true
      */
     premiumOnly?: boolean
+
+    /**
+     * @description Limit controller, if true will use limit
+     * @example limit: true
+     */
+    limit?: boolean
 
     /**
      * @description Minimum argument, for example ytmp3 without url will send required minimun args message

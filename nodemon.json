@@ -1,0 +1,9 @@
+{
+    "ignore": [".git", "node_modules/**/node_modules", "commands/*", "*.json"],
+    "execMap": {
+        "js": "node"
+    },
+    "events": {
+        "restart": "cls"
+    }
+}

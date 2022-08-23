@@ -1,11 +1,12 @@
 const { commands, listCommands } = require('@libs/constants/command/command.constant')
-const { watchFile, existsSync, writeFileSync } = require('fs')
+const { watchFile } = require('fs')
 const { logger } = require('../logger/logger.util')
 const { GlobSync } = require('glob')
 const cron = require('node-cron')
 const rimraf = require('rimraf')
 const path = require('path')
 const config = require('@config')
+const knex = require('@database')
 
 class Utility {
     constructor() {
@@ -34,7 +35,10 @@ class Utility {
     }
 
     initCronJob() {
-        cron.schedule('0 0 * * *', async () => {})
+        // reset limit
+        cron.schedule('0 0 * * *', async () => {
+            await knex('users').update({ user_limit: config.limit || 100 })
+        })
         logger.stats('CronJob init')
     }
 

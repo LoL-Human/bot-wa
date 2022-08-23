@@ -3,7 +3,7 @@ const { commands } = require('@libs/constants/command/command.constant')
 const { ICommand } = require('@libs/builders/command/command.builder')
 const { serialize } = require('@libs/utils/serialize/serialize.util')
 const { cooldown } = require('@libs/utils/cooldown/cooldown.util')
-const database = require('@libs/databases')
+const { knex, users } = require('@database')
 const moment = require('moment-timezone')
 const config = require('@config')
 const chalk = require('chalk')
@@ -47,8 +47,16 @@ module.exports = async (client, { messages, type }) => {
      */
     const getCommand = commands.get(command) || commands.find((v) => v?.aliases && v?.aliases?.includes(command))
     if (getCommand) {
-        database.users.insert(msg.senderNumber)
-        let user = database.users.findOne(msg.senderNumber)
+        let user = await users.findOne(msg.senderNumber)
+        if (!user) {
+            await users.create(msg.senderNumber)
+            user = await users.findOne(msg.senderNumber)
+        }
+
+        if (user.user_limit === 0) {
+            return msg.reply('Limit has run out')
+        }
+
         const command_log = [chalk.whiteBright('├'), chalk.keyword('aqua')(`[ ${msg.isGroup ? ' GROUP ' : 'PRIVATE'} ]`), msg.body.substr(0, 50).replace(/\n/g, ''), chalk.greenBright('from'), chalk.yellow(msg.senderNumber)]
         if (msg.isGroup) {
             command_log.push(chalk.greenBright('in'))
@@ -59,12 +67,15 @@ module.exports = async (client, { messages, type }) => {
         if (getCommand.ownerOnly && !config.ownerNumber.includes(msg.senderNumber)) {
             return msg.reply('Sorry, command only for owner.')
         }
+
         if (getCommand.premiumOnly && !user.user_premium) {
             return msg.reply('Sorry, command only for premium user.')
         }
+
         if (getCommand.groupOnly && !msg.isGroup) {
             return msg.reply('Sorry, command only for group.')
         }
+
         if (
             getCommand.groupOnly &&
             getCommand.adminOnly &&
@@ -75,6 +86,7 @@ module.exports = async (client, { messages, type }) => {
         ) {
             return msg.reply('Sorry, command only for admin group.')
         }
+
         if (getCommand.privateOnly && msg.isGroup) {
             return msg.reply('Sorry, command only for private chat.')
         }
@@ -110,7 +122,12 @@ module.exports = async (client, { messages, type }) => {
                 await msg.reply('Please wait...')
             }
         }
-        database.users.addExp(msg, msg.senderNumber, 100)
-        return getCommand.callback({ client, message, msg, command, prefix, args, fullArgs, database })
+
+        return getCommand.callback({ client, message, msg, command, prefix, args, fullArgs }).then(async () => {
+            users.addExp(msg, msg.senderNumber, 100)
+            if (getCommand.limit) {
+                await knex('users').decrement('user_limit', 1)
+            }
+        })
     }
 }

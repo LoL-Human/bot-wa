@@ -1,4 +1,5 @@
 const { ICommand } = require('@libs/builders/command/command.builder')
+const { users } = require('@database')
 
 /**
  * @type { ICommand }
@@ -6,15 +7,15 @@ const { ICommand } = require('@libs/builders/command/command.builder')
 module.exports = {
     category: 'about',
     description: 'Show your stats.',
-    callback: async ({ msg, database }) => {
-        const user = database.users.findOne(msg.senderNumber)
+    callback: async ({ msg }) => {
+        const user = await users.findOne(msg.senderNumber)
         return msg.reply(`
-User Number : ${user.user_wa_number}
+User Number : ${user.user_jid}
 User Limit : ${user.user_limit}
 User Level : Lv. ${user.user_level}
 User Exp : ${user.user_exp} XP
 User Premium : ${user.user_premium ? 'Yes' : 'No'}
-User Registered : ${user.user_create_at}
+User Registered At : ${user.user_create_at}
 `)
     },
 }
