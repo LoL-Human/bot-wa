@@ -6,7 +6,7 @@ const cron = require('node-cron')
 const rimraf = require('rimraf')
 const path = require('path')
 const config = require('@config')
-const knex = require('@database')
+const knex = require('@database/connection')
 
 class Utility {
     constructor() {

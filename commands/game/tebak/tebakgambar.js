@@ -1,6 +1,6 @@
 const { ICommand } = require('@libs/builders/command/command.builder')
 const axios = require('axios').default
-const { users } = require('@database')
+const users = require('@database/services/users')
 const config = require('@config')
 
 const _collection = new Map()

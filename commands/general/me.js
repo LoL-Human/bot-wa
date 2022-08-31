@@ -1,5 +1,5 @@
 const { ICommand } = require('@libs/builders/command/command.builder')
-const { users } = require('@database')
+const users = require('@database/services/users')
 
 /**
  * @type { ICommand }

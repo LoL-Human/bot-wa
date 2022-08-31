@@ -1,5 +1,5 @@
 const config = require('@config')
-const { knex } = require('@database')
+const knex = require('@database/connection')
 
 const findOne = async (user_jid) => {
     return knex('users').where({ user_jid }).first()
