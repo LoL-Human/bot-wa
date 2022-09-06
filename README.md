@@ -34,8 +34,18 @@ Lightweight WhatsApp Bot
 
 -   Change filename config.json.example to config.json then,
 
+-   Termux (if you are not using termux, skip this step)
+
+```cmd
+$ pkg install git sqlite python make -y
+$ npm install sqlite3 --build-from-source --sqlite=/data/data/com.termux/files/usr/bin/sqlite3
+```
+
+-   Installing nodejs package & migrating
+
 ```cmd
 $ npm i
+$ npm i -g knex
 $ knex migrate:latest
 ```
 
