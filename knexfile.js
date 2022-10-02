@@ -4,7 +4,7 @@ const config = require('./config/index')
  * @type { import("knex").Knex.Config }
  */
 const KnexConfig = {
-    client: 'sqlite3',
+    client: 'better-sqlite3',
     connection: {
         filename: `./database/${config.sessionName}-db.db`,
     },

@@ -1,4 +1,4 @@
-const { post } = require('@libs/utils/http/http.util')
+const { post } = require('@libs/utils/http')
 
 /**
  *

@@ -1,5 +1,5 @@
 import { WAMessage, WASocket } from '@adiwajshing/baileys'
-import { Serialize } from '@libs/utils/serialize/serialize.util'
+import { Serialize } from '@libs/utils/serialize'
 
 interface CommandObject {
     client: WASocket

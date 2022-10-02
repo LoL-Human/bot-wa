@@ -1,6 +1,6 @@
-const { commands, listCommands } = require('@libs/constants/command/command.constant')
+const { commands, listCommands } = require('@libs/constants/command')
 const { watchFile } = require('fs')
-const { logger } = require('../logger/logger.util')
+const logger = require('../logger')
 const { GlobSync } = require('glob')
 const cron = require('node-cron')
 const rimraf = require('rimraf')
@@ -30,7 +30,7 @@ class Utility {
         const sessionFiles = new GlobSync('session/*-jadibot-session').found
         if (sessionFiles.length !== 0) {
             sessionFiles.forEach((v) => rimraf.sync(v))
-            logger.stats('Clear session jadibot')
+            logger.info('Clear session jadibot')
         }
     }
 
@@ -39,7 +39,7 @@ class Utility {
         cron.schedule('0 0 * * *', async () => {
             await knex('users').update({ user_limit: config.limit || 100 })
         })
-        logger.stats('CronJob init')
+        logger.info('CronJob init')
     }
 
     registerCommand() {
@@ -56,7 +56,7 @@ class Utility {
                     if (dir in require.cache) {
                         delete require.cache[dir]
                         commands.set(basename, require(file))
-                        logger.stats(`reloaded ${basename}`)
+                        logger.info(`reloaded ${basename}`)
                     }
                 })
             }
@@ -75,7 +75,7 @@ class Utility {
             !listCommands[category].includes(x) && listCommands[category].push(x)
         }
 
-        logger.stats(`Loaded commands ${commands.size} of ${files.length}`)
+        logger.info(`Loaded commands ${commands.size} of ${files.length}`)
     }
 }
 

@@ -1,5 +1,5 @@
-const { ICommand } = require('@libs/builders/command/command.builder')
-const { lolhuman } = require('@libs/constants/api/api.constant')
+const { ICommand } = require('@libs/builders/command')
+const { lolhuman } = require('@libs/constants/api')
 
 /**
  * @type { ICommand }

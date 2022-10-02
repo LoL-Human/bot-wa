@@ -1,12 +1,11 @@
 const { default: WASocket, fetchLatestBaileysVersion, useMultiFileAuthState, DisconnectReason } = require('@adiwajshing/baileys')
-const { Utility } = require('./utils/utils/utility.util')
-const { logger } = require('./utils/logger/logger.util')
+const { Utility } = require('./utils/utility')
+const logger = require('./utils/logger')
 const { sessionName } = require('@config')
 const { messageHandler } = require('./handlers')
 const { Boom } = require('@hapi/boom')
 const { existsSync } = require('fs')
 const store = require('@store')
-const chalk = require('chalk')
 const Pino = require('pino')
 
 existsSync('./store/baileys_store.json') && store.readFromFile('./store/baileys_store.json')
@@ -43,11 +42,11 @@ const connect = async () => {
         const { lastDisconnect, connection, qr } = up
 
         if (qr) {
-            logger.stats('Please scanning QR Code to connect')
+            logger.info('Please scanning QR Code to connect')
         }
 
         if (connection) {
-            logger.stats('Connection Status: ', connection)
+            logger.info(`Connection Status: ${connection}`)
         }
 
         if (connection === 'close') {

@@ -1,0 +1,23 @@
+{
+    "wait": "Harap tunggu...",
+    "message": {
+        "limit_run_out": "Limit Anda sudah habis.",
+        "owner_only": "Maaf, command ini hanya untuk owner.",
+        "premium_only": "Maaf, command ini hanya untuk premium user.",
+        "private_only": "Maaf, command ini hanya untuk private chat.",
+        "group_only": "Maaf, command ini hanya untuk grup.",
+        "admin_only": "Maaf, command ini hanya untuk admin grup.",
+        "cooldown": "Cooldown, harap tunggu {{cooldown}} detik lagi."
+    },
+    "command": {
+        "not_found": "Command {{command}} tidak ditemukan."
+    },
+    "game": {
+        "finish_last_first": "Harap selesaikan game sebelumnya terlebih dahulu.",
+        "right_answer": "Benar! Anda mendapat {{xp}} XP!",
+        "timeout_answer": "Waktu habis, jawabannya adalah : {{answer}}."
+    },
+    "sticker": {
+        "no_media": "Harap reply gambar atau video menggunakan command ini."
+    }
+}

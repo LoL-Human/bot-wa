@@ -1,4 +1,4 @@
-const { ICommand } = require('@libs/builders/command/command.builder')
+const { ICommand } = require('@libs/builders/command')
 const { Client } = require('youtubei')
 
 const youtube = new Client()

@@ -1,6 +1,7 @@
 const config = require('@config')
-const { ICommand } = require('@libs/builders/command/command.builder')
+const { ICommand } = require('@libs/builders/command')
 const axios = require('axios').default
+const i18n = require('i18n')
 
 const sticker = axios.create({
     baseURL: 'https://sticker-api-tpe3wet7da-uc.a.run.app',
@@ -51,7 +52,7 @@ module.exports = {
                 client.sendMessage(msg.from, { sticker: Buffer.from(data.data.split(';base64,')[1], 'base64') }, { quoted: message })
             })
         } else {
-            msg.reply(`Please reply an image or video with ${prefix + command}`)
+            msg.reply(i18n.__('sticker.no_media'))
         }
     },
 }

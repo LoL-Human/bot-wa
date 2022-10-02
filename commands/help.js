@@ -1,8 +1,9 @@
-const { ICommand } = require('@libs/builders/command/command.builder')
-const { listCommands, commands } = require('@libs/constants/command/command.constant')
-const { timeFormat } = require('@utils/utils/utils.util')
+const { ICommand } = require('@libs/builders/command')
+const { listCommands, commands } = require('@libs/constants/command')
+const { timeFormat } = require('@libs/utils')
 const moment = require('moment-timezone')
 const config = require('@config')
+const i18n = require('i18n')
 
 /**
  * @type { ICommand }
@@ -70,7 +71,7 @@ module.exports = {
                     ],
                 })
             } else {
-                return msg.reply(`Command ${args[0]} not found.`)
+                return msg.reply(i18n.__('command.not_found', { command: args[0] }))
             }
         }
 

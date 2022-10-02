@@ -1,13 +1,14 @@
 const { getContentType, MessageUpdateType, WAMessage, WASocket } = require('@adiwajshing/baileys')
-const { commands } = require('@libs/constants/command/command.constant')
-const { ICommand } = require('@libs/builders/command/command.builder')
-const { serialize } = require('@libs/utils/serialize/serialize.util')
-const { cooldown } = require('@libs/utils/cooldown/cooldown.util')
+const { commands } = require('@libs/constants/command')
+const { ICommand } = require('@libs/builders/command')
+const { serialize } = require('@libs/utils/serialize')
+const { cooldown } = require('@libs/utils/cooldown')
 const knex = require('@database/connection')
 const users = require('@database/services/users')
 const moment = require('moment-timezone')
 const config = require('@config')
 const chalk = require('chalk')
+const i18n = require('i18n')
 
 /**
  *
@@ -53,9 +54,10 @@ module.exports = async (client, { messages, type }) => {
             await users.create(msg.senderNumber)
             user = await users.findOne(msg.senderNumber)
         }
+        i18n.setLocale(user.user_language)
 
         if (user.user_limit === 0) {
-            return msg.reply('Limit has run out')
+            return msg.reply(i18n.__('message.limit_run_out'))
         }
 
         const command_log = [chalk.whiteBright('├'), chalk.keyword('aqua')(`[ ${msg.isGroup ? ' GROUP ' : 'PRIVATE'} ]`), msg.body.substr(0, 50).replace(/\n/g, ''), chalk.greenBright('from'), chalk.yellow(msg.senderNumber)]
@@ -66,15 +68,15 @@ module.exports = async (client, { messages, type }) => {
         console.log(...command_log)
 
         if (getCommand.ownerOnly && !config.ownerNumber.includes(msg.senderNumber)) {
-            return msg.reply('Sorry, command only for owner.')
+            return msg.reply(i18n.__('message.owner_only'))
         }
 
         if (getCommand.premiumOnly && !user.user_premium) {
-            return msg.reply('Sorry, command only for premium user.')
+            return msg.reply(i18n.__('message.premium_only'))
         }
 
         if (getCommand.groupOnly && !msg.isGroup) {
-            return msg.reply('Sorry, command only for group.')
+            return msg.reply(i18n.__('message.private_only'))
         }
 
         if (
@@ -85,11 +87,11 @@ module.exports = async (client, { messages, type }) => {
                 .map((v) => v.id)
                 .includes(msg.senderNumber + '@s.whatsapp.net')
         ) {
-            return msg.reply('Sorry, command only for admin group.')
+            return msg.reply(i18n.__('message.group_only'))
         }
 
         if (getCommand.privateOnly && msg.isGroup) {
-            return msg.reply('Sorry, command only for private chat.')
+            return msg.reply(i18n.__('message.admin_only'))
         }
 
         if (getCommand.minArgs && getCommand.minArgs > args.length) {
@@ -108,7 +110,7 @@ module.exports = async (client, { messages, type }) => {
             const cooldownBuilder = `${msg.senderNumber}-${command}`
             if (cooldown.get(cooldownBuilder) && cooldown.get(cooldownBuilder) > moment()) {
                 const duration = moment.duration(cooldown.get(cooldownBuilder).diff(moment()))
-                return msg.reply(`Cooldown, please waiting ${Math.round(duration.asSeconds())} seconds again.`)
+                return msg.reply(i18n.__('message.cooldown', { cooldown: Math.round(duration.asSeconds()) }))
             }
             if (!cooldown.get(cooldownBuilder) || (cooldown.get(cooldownBuilder) && cooldown.get(cooldownBuilder) < moment())) {
                 cooldown.set(cooldownBuilder, moment().add(moment.duration(getCommand.cooldown)))
@@ -120,7 +122,7 @@ module.exports = async (client, { messages, type }) => {
             if (typeof getCommand.waitMessage === 'string') {
                 await msg.reply(getCommand.waitMessage)
             } else {
-                await msg.reply('Please wait...')
+                await msg.reply(i18n.__('wait'))
             }
         }
 

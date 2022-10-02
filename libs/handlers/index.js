@@ -1,4 +1,4 @@
-const messageHandler = require('./message.handler')
+const messageHandler = require('./message')
 
 module.exports = {
     messageHandler,

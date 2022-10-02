@@ -1,5 +1,5 @@
 const { Chat, Contact, BaileysEventEmitter } = require('@adiwajshing/baileys/lib/Types')
-const { logger } = require('@libs/utils/logger/logger.util')
+const logger = require('@libs/utils/logger')
 const KeyedDB = require('@adiwajshing/keyed-db').default
 
 /**
@@ -123,7 +123,7 @@ const readFromFile = (path) => {
     // require fs here so that in case "fs" is not available -- the app does not crash
     const { readFileSync, existsSync } = require('fs')
     if (existsSync(path)) {
-        logger.store(`Reading store from file (${path})`)
+        logger.debug(`Reading store from file (${path})`)
         const jsonStr = readFileSync(path, { encoding: 'utf-8' })
         const json = JSON.parse(jsonStr)
         fromJSON(json)

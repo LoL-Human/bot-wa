@@ -1,4 +1,4 @@
-const { ICommand } = require('@libs/builders/command/command.builder')
+const { ICommand } = require('@libs/builders/command')
 const moment = require('moment-timezone')
 
 /**

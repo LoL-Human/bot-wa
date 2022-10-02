@@ -1,5 +1,5 @@
 const { youtube } = require('@libs/utils/scrapper/download/youtube')
-const { ICommand } = require('@libs/builders/command/command.builder')
+const { ICommand } = require('@libs/builders/command')
 
 /**
  * @type { ICommand }

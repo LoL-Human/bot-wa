@@ -8,12 +8,12 @@ class MessageCollector extends EventEmitter {
     client
 
     /**
-     * @type { import('./mesage.collector').MessageCollectorOptions }
+     * @type { import('.').MessageCollectorOptions }
      */
     options
 
     /**
-     * @type { import('@libs/utils/serialize/serialize.util').Serialize }
+     * @type { import('@libs/utils/serialize').Serialize }
      */
     msg
 
@@ -28,7 +28,7 @@ class MessageCollector extends EventEmitter {
      *
      * @param { WASocket } client
      * @param { MessageCollectorOptions } options
-     * @param { import('@libs/utils/serialize/serialize.util').Serialize } msg
+     * @param { import('@libs/utils/serialize').Serialize } msg
      */
     constructor(client, options, msg) {
         super()
@@ -54,7 +54,7 @@ class MessageCollector extends EventEmitter {
         if (message.key && message.key.remoteJid === 'status@broadcast') return
         if (!message.message) return
 
-        const msg = await require('@libs/utils/serialize/serialize.util').serialize(message, this.client)
+        const msg = await require('@libs/utils/serialize').serialize(message, this.client)
 
         if (this.msg.from !== msg.from) return
         if (typeof this.options.filter === 'string') {

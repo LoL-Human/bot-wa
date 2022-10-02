@@ -2,7 +2,7 @@ const config = require('@config')
 const { knex } = require('knex')
 
 module.exports = knex({
-    client: 'sqlite3',
+    client: 'better-sqlite3',
     connection: {
         filename: `./database/${config.sessionName}-db.db`,
     },

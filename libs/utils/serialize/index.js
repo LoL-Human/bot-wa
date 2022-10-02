@@ -1,16 +1,16 @@
 const { WAMessage, WASocket, getContentType } = require('@adiwajshing/baileys')
-const { downloadMedia } = require('../utils/utils.util')
-const collector = require('@libs/constants/collector/message.collector')
+const { downloadMedia } = require('..')
+const collector = require('@libs/constants/collector')
 
 /**
  *
  * @param { WAMessage } msg
  * @param { WASocket } client
- * @returns { Promise<import('./serialize.util').Serialize> }
+ * @returns { Promise<import('.').Serialize> }
  */
 const serialize = async (msg, client) => {
     /**
-     * @type { import('./serialize.util').Serialize }
+     * @type { import('.').Serialize }
      */
     const m = {}
     if (msg.key) {
