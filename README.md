@@ -44,9 +44,7 @@ $ npm install sqlite3 --build-from-source --sqlite=/data/data/com.termux/files/u
 -   Installing nodejs package & migrating
 
 ```cmd
-$ npm i
-$ npm i -g knex
-$ knex migrate:latest
+$ npm install
 ```
 
 ---

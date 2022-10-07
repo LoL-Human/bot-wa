@@ -1,5 +1,6 @@
 require('module-alias/register')
 require('@libs/constants/prototype')
+require('@database/index')
 
 const logger = require('@libs/utils/logger')
 const chalk = require('chalk')
