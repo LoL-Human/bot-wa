@@ -31,6 +31,7 @@ module.exports = {
                     footer: `© ${config.botName} Bot`,
                     buttonText: 'Menu',
                     sections,
+                    viewOnce: true,
                 })
             }
 
@@ -69,6 +70,7 @@ module.exports = {
                             },
                         },
                     ],
+                    viewOnce: true,
                 })
             } else {
                 return msg.reply(i18n.__('command.not_found', { command: args[0] }))
@@ -92,6 +94,7 @@ module.exports = {
                 { index: 1, quickReplyButton: { displayText: 'Owner Bot', id: prefix + 'owner' } },
                 { index: 2, quickReplyButton: { displayText: 'Complete Menu', id: prefix + 'help listmenu' } },
             ],
+            viewOnce: true,
             mentions: [msg.sender],
         })
     },

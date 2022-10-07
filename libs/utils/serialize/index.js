@@ -93,13 +93,13 @@ const serialize = async (msg, client) => {
         return !m.isSelf && client.sendMessage(m.from, { location }, { quoted: msg })
     }
     m.replyTemplateButton = (text, templateButtons, title, footer) => {
-        return !m.isSelf && client.sendMessage(m.from, { text, footer, templateButtons, title }, { quoted: msg })
+        return !m.isSelf && client.sendMessage(m.from, { text, footer, templateButtons, title, viewOnce: true }, { quoted: msg })
     }
     m.replyButton = (text, buttons, title, footer) => {
-        return !m.isSelf && client.sendMessage(m.from, { text, footer, buttons, title }, { quoted: msg })
+        return !m.isSelf && client.sendMessage(m.from, { text, footer, buttons, title, viewOnce: true }, { quoted: msg })
     }
     m.replyList = (text, buttonText, sections, title, footer) => {
-        return !m.isSelf && client.sendMessage(m.from, { text, buttonText, sections, title, footer }, { quoted: msg })
+        return !m.isSelf && client.sendMessage(m.from, { text, buttonText, sections, title, footer, viewOnce: true }, { quoted: msg })
     }
     m.react = (text) => {
         return !m.isSelf && client.sendMessage(m.from, { react: { text, key: msg.key } })
