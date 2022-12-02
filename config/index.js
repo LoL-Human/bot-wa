@@ -1,11 +1,8 @@
 const config = require('../config.json')
 const dotenv = require('dotenv')
-const path = require('path')
 dotenv.config()
 
 module.exports = {
-    rootPath: path.resolve(__dirname, '..'), // Ignore this
-
     botName: process.env.BOT_NAME || config.botName,
 
     limit: process.env.LIMIT || config.limit,

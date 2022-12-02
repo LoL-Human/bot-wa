@@ -5,3 +5,7 @@ interface String {
 interface Map {
     find(fn: (value: V, key: K, collection: this) => boolean): V | undefined
 }
+
+interface Array {
+    random(): any
+}

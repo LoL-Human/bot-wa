@@ -27,7 +27,7 @@ class MessageCollector extends EventEmitter {
     /**
      *
      * @param { WASocket } client
-     * @param { MessageCollectorOptions } options
+     * @param { import('.').MessageCollectorOptions } options
      * @param { import('@libs/utils/serialize').Serialize } msg
      */
     constructor(client, options, msg) {

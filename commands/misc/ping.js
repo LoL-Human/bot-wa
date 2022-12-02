@@ -1,8 +1,7 @@
-const { ICommand } = require('@libs/builders/command')
 const moment = require('moment-timezone')
 
 /**
- * @type { ICommand }
+ * @type { import('@libs/builders/command').ICommand }
  */
 module.exports = {
     aliases: ['p'],

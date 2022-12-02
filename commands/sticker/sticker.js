@@ -1,5 +1,5 @@
 const config = require('@config')
-const { ICommand } = require('@libs/builders/command')
+
 const axios = require('axios').default
 const i18n = require('i18n')
 
@@ -8,15 +8,14 @@ const sticker = axios.create({
 })
 
 /**
- * @type { ICommand }
+ * @type { import('@libs/builders/command').ICommand }
  */
 module.exports = {
     aliases: ['s'],
-    category: 'maker',
-    subCategory: 'sticker',
+    category: 'sticker',
     description: 'Sticker Maker',
     waitMessage: 'Please wait, making sticker...',
-    callback: async ({ msg, client, message, prefix, command }) => {
+    callback: async ({ msg, client, message }) => {
         const file = (await msg.download('buffer')) || (msg.quoted && (await msg.quoted.download('buffer')))
         if (msg.typeCheck.isImage || msg.typeCheck.isQuotedImage) {
             const data = {

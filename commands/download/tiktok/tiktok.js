@@ -1,8 +1,7 @@
-const { ICommand } = require('@libs/builders/command')
-const { lolhuman } = require('@libs/constants/api')
+const api = require('@libs/utils/api')
 
 /**
- * @type { ICommand }
+ * @type { import('@libs/builders/command').ICommand }
  */
 module.exports = {
     aliases: ['tt', 'ttdl'],
@@ -13,7 +12,14 @@ module.exports = {
     expectedArgs: '<link>',
     example: '{prefix}{command} https://vt.tiktok.com/ZSwWCk5o/',
     callback: async ({ msg, args }) => {
-        const result = await lolhuman.tiktokNoWM3(args[0])
-        return msg.replyVideo({ url: result })
+        return api('lolhuman')
+            .get('/api/tiktok2', {
+                params: {
+                    url: args[0],
+                },
+            })
+            .then(({ data }) => {
+                return msg.replyVideo({ url: data.result })
+            })
     },
 }

@@ -1,8 +1,7 @@
-const { ICommand } = require('@libs/builders/command')
 const users = require('@database/services/users')
 
 /**
- * @type { ICommand }
+ * @type { import('@libs/builders/command').ICommand }
  */
 module.exports = {
     category: 'about',

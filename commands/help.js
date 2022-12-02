@@ -1,4 +1,3 @@
-const { ICommand } = require('@libs/builders/command')
 const { listCommands, commands } = require('@libs/constants/command')
 const { timeFormat } = require('@libs/utils')
 const moment = require('moment-timezone')
@@ -6,7 +5,7 @@ const config = require('@config')
 const i18n = require('i18n')
 
 /**
- * @type { ICommand }
+ * @type { import('@libs/builders/command').ICommand }
  */
 module.exports = {
     aliases: ['menu'],
@@ -36,7 +35,7 @@ module.exports = {
             }
 
             /**
-             * @type { ICommand }
+             * @type { import('@libs/builders/command').ICommand }
              */
             let command = commands.get(args[0]) || commands.find((v) => v?.aliases?.includes(args[0]))
             if (command) {

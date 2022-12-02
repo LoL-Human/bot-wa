@@ -1,6 +1,6 @@
 const { getContentType, MessageUpdateType, WAMessage, WASocket } = require('@adiwajshing/baileys')
 const { commands } = require('@libs/constants/command')
-const { ICommand } = require('@libs/builders/command')
+
 const { serialize } = require('@libs/utils/serialize')
 const { cooldown } = require('@libs/utils/cooldown')
 const knex = require('@database/connection')
@@ -45,7 +45,7 @@ module.exports = async (client, { messages, type }) => {
     const fullArgs = msg.body?.replace(command, '')?.slice(1)?.trim() || null
 
     /**
-     * @type { ICommand }
+     * @type { import('@libs/builders/command').ICommand }
      */
     const getCommand = commands.get(command) || commands.find((v) => v?.aliases && v?.aliases?.includes(command))
     if (getCommand) {
@@ -97,7 +97,6 @@ module.exports = async (client, { messages, type }) => {
         if (getCommand.minArgs && getCommand.minArgs > args.length) {
             var text = `*Minimal argument is ${getCommand.minArgs}*\n`
             if (getCommand.expectedArgs) {
-                text += `*Argument :* ${getCommand.expectedArgs}\n`
                 text += `*Usage :* {prefix}{command} {argument}\n`
             }
             if (getCommand.example) {

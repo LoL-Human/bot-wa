@@ -1,10 +1,9 @@
-const { ICommand } = require('@libs/builders/command')
 const { Client } = require('youtubei')
 
 const youtube = new Client()
 
 /**
- * @type { ICommand }
+ * @type { import('@libs/builders/command').ICommand }
  */
 module.exports = {
     aliases: ['yts'],

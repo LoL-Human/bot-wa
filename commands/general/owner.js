@@ -1,8 +1,7 @@
-const { ICommand } = require('@libs/builders/command')
 const config = require('@config')
 
 /**
- * @type { ICommand }
+ * @type { import('@libs/builders/command').ICommand }
  */
 module.exports = {
     category: 'about',
