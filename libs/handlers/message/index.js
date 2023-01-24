@@ -76,7 +76,7 @@ module.exports = async (client, { messages, type }) => {
         }
 
         if (getCommand.groupOnly && !msg.isGroup) {
-            return msg.reply(i18n.__('message.private_only'))
+            return msg.reply(i18n.__('message.group_only'))
         }
 
         if (
