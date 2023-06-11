@@ -1,4 +1,4 @@
-const { default: WASocket, fetchLatestBaileysVersion, useMultiFileAuthState, DisconnectReason } = require('@adiwajshing/baileys')
+const { default: WASocket, fetchLatestBaileysVersion, useMultiFileAuthState, DisconnectReason, Browsers, fetchLatestWaWebVersion } = require('@adiwajshing/baileys')
 const { Utility } = require('./utils/utility')
 const logger = require('./utils/logger')
 const { sessionName } = require('@config')
@@ -13,17 +13,17 @@ setInterval(() => {
     store.writeToFile('./store/baileys_store.json')
 }, 60_000)
 
-const utility = new Utility()
+new Utility()
 
 const connect = async () => {
     const { state, saveCreds } = await useMultiFileAuthState(`./session/${sessionName}-session`)
-    const { version, isLatest } = await fetchLatestBaileysVersion()
+    const { version, isLatest } = await fetchLatestWaWebVersion().catch(() => fetchLatestBaileysVersion())
 
     const client = WASocket({
         printQRInTerminal: true,
         auth: state,
         logger: Pino({ level: 'silent' }),
-        browser: ['LoL Human', 'Safari', '1.0'],
+        browser: Browsers.macOS('Desktop'),
         version,
     })
 
