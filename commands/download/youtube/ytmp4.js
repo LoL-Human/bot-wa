@@ -1,4 +1,4 @@
-const { youtube } = require('@libs/utils/scrapper/download/youtube')
+const api = require('@libs/utils/api')
 
 /**
  * @type { import('@libs/builders/command').ICommand }
@@ -12,8 +12,8 @@ module.exports = {
     expectedArgs: '<link>',
     example: '{prefix}{command} https://www.youtube.com/watch?v=eZskFo64rs8',
     callback: async ({ msg, args }) => {
-        const result = await youtube(args[0], 'mp4')
-        await msg.replyImage({ url: result.thumbnail }, `${result.title} - ${result.size}`)
-        await msg.replyVideo({ url: result.link })
+        let { data } = await api('lolhuman').get('/api/ytvideo2', { params: { url: args[0] } })
+        await msg.replyImage({ url: data.result.thumbnail }, `${data.result.title} - ${data.result.size}`)
+        await msg.replyVideo({ url: data.result.link })
     },
 }
